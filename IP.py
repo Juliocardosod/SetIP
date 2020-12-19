@@ -3,7 +3,7 @@ import ctypes
 import os
 import time
 
-
+##Comentário teste
 
 def isAdmin():
     try:
