@@ -4,7 +4,7 @@ import os
 import time
 
 Interface = 'Ethernet'
-InstanciaSQL = 'SQLINST'
+InstanciaSQL = 'SQLBOSCH'
 
 os.system("mode con cols=63 lines=30")
 
@@ -34,17 +34,20 @@ else:
 
 def setIP24(IP):
     subprocess.call('netsh interface ipv4 add address "Ethernet" {} 255.255.255.0'.format(IP))
+    time.sleep(1)
     os.system('cls')
 
 def setIP(IP, MK, GT):
     subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway = {}'.format(Interface, IP, MK, GT))
+    time.sleep(1)
+    os.system('cls')
 
 def setDHCP():
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
     subprocess.call('netsh interface ip set dns "{}" dhcp'.format(Interface))
+    time.sleep(1)
     os.system('cls')
-    #print('Interface {} setada como DHCP!'.format(Interface))
-
+    
 def setIPbb2(NW):
     ips = NW.split('.')
     ips[3] = '253'
@@ -55,6 +58,7 @@ def setIPbb2(NW):
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
     subprocess.call('netsh interface ipv4 add address "{}" {} 255.255.255.0 gateway={}'.format(Interface, ipj, gtw))
     subprocess.call('netsh interface ip set dns "{}" static 8.8.8.8'.format(Interface))
+    time.sleep(1)
     os.system('cls')
 
 def clientes():
@@ -76,7 +80,6 @@ def clientes():
     if ec == '1':
         NW = input('Digite o IP da rede (Ex: 192.168.0.0): ')
         setIPbb2(NW)
-        input('Nada aqui!')
         os.system('cls')
 
     elif ec == '2':
@@ -127,10 +130,12 @@ def servicos():
         se = input('\nEscolha habilitar ou desabilitar (h/d): ')
         if se == 'h' or se == 'H':
             os.system('net start {}'.format(InstanciaSQL))
+            time.sleep(1)
             os.system('cls')
             servicos()
         elif se == 'd' or se == 'D':
             os.system('net stop {}'.format(InstanciaSQL))
+            time.sleep(1)
             os.system('cls')
             servicos()
         else:
@@ -151,8 +156,6 @@ def servicos():
     else:
         os.system('cls')
         servicos()
-
-    
 
 def intMan():
     print('''
@@ -192,7 +195,6 @@ def intMan():
 def sai():
     input('\nAté a próxima abestado! ;)')#hahahaha
     exit()
-
 
 def intChange(Intf):
     print('''
