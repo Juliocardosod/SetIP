@@ -106,6 +106,7 @@ def clientes():
 
 def setDNS(DNS):
     subprocess.call('netsh interface ip set dns "{}" static {}'.format(Interface, DNS))
+    time.sleep(1)
     os.system('cls')
 
 def servicos():
