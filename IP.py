@@ -3,6 +3,9 @@ import ctypes
 import os
 import time
 
+Interface = 'Ethernet'
+InstanciaSQL = 'SQLINST'
+
 
 def isAdmin():
     try:
@@ -26,7 +29,7 @@ else:
     else:
         exit()
 
-Interface = 'Ethernet'
+
 
 def setIP24(IP):
     subprocess.call('netsh interface ipv4 add address "Ethernet" {} 255.255.255.0'.format(IP))
@@ -70,20 +73,28 @@ def clientes():
     ec = input('Digite uma opção: ')
 
     if ec == '1':
+        NW = input('Digite o IP da rede (Ex: 192.168.0.0): ')
+        setIPbb2(NW)
         input('Nada aqui!')
         os.system('cls')
+
     elif ec == '2':
-        input('Nada aqui também!')
+        NW = '172.21.1.0'
+        setIPbb2(NW)
         os.system('cls')
+
     elif ec == '3':
-        input('Nada aqui!')
+        NW = '172.21.6.0'
+        setIPbb2(NW)
         os.system('cls')
+
     elif ec == '4':
-        input('Nah!')
         os.system('cls')
+
     elif ec == 'exit':
-        os.system('cls')
+        os.system('cls') 
         sai()
+        
     else:
         os.system('cls')
         clientes()
@@ -101,7 +112,7 @@ def servicos():
         GERENCIAMENTO DE SERVIÇOS
 
         (1) SQL
-        (2) VPN
+        (2) 
         (3) VOLTAR
     //em construção!!!
     
@@ -114,9 +125,11 @@ def servicos():
         print('\nSERVIÇO SQL')
         se = input('\nEscolha habilitar ou desabilitar (h/d): ')
         if se == 'h' or se == 'H':
+            os.system('net start {}'.format(InstanciaSQL))
             os.system('cls')
             servicos()
         elif se == 'd' or se == 'D':
+            os.system('net stop {}'.format(InstanciaSQL))
             os.system('cls')
             servicos()
         else:
@@ -126,11 +139,14 @@ def servicos():
         
     elif es == '2':
         os.system('cls')
+
     elif es == '3':
         os.system('cls')
+
     elif es == 'exit':
         os.system('cls')
         sai()
+
     else:
         os.system('cls')
         servicos()
