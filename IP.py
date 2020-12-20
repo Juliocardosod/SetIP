@@ -6,6 +6,7 @@ import time
 Interface = 'Ethernet'
 InstanciaSQL = 'SQLINST'
 
+os.system("mode con cols=63 lines=30")
 
 def isAdmin():
     try:
@@ -59,7 +60,7 @@ def setIPbb2(NW):
 def clientes():
     print('''
 
-    --------------------------------------------
+    -----------------------------------------------------
 
           Menu Clientes
 
@@ -68,7 +69,7 @@ def clientes():
           (3) ABB Sorocaba
           (4) Voltar
     //em construção!!!
-    --------------------------------------------
+    -----------------------------------------------------
     ''')
     ec = input('Digite uma opção: ')
 
@@ -94,7 +95,7 @@ def clientes():
     elif ec == 'exit':
         os.system('cls') 
         sai()
-        
+
     else:
         os.system('cls')
         clientes()
@@ -107,7 +108,7 @@ def setDNS(DNS):
 def servicos():
     print('''
 
-    --------------------------------------------
+    -----------------------------------------------------
 
         GERENCIAMENTO DE SERVIÇOS
 
@@ -116,7 +117,7 @@ def servicos():
         (3) VOLTAR
     //em construção!!!
     
-    --------------------------------------------
+    -----------------------------------------------------
 
     ''')
     es = input('Digite a opção: ')
@@ -156,17 +157,17 @@ def servicos():
 def intMan():
     print('''
 
-    --------------------------------------------
+    -----------------------------------------------------
 
-        GERENCIAMENTO DE INTERFACE
+           GERENCIAMENTO DE INTERFACE
 
-        INTERFACE {}
+           INTERFACE {}
 
-        (1) DESABILITAR
-        (2) HABILITAR
-        (3) VOLTAR
+           (1) DESABILITAR
+           (2) HABILITAR
+           (3) VOLTAR
     
-    --------------------------------------------
+    -----------------------------------------------------
 
     '''.format(Interface))
     eit = input('Digite a opção: ')
@@ -196,7 +197,7 @@ def sai():
 def intChange(Intf):
     print('''
 
-    -----------------------------------------------
+    -----------------------------------------------------
 
             SELECIONE A INTERFACE      
                            
@@ -207,7 +208,7 @@ def intChange(Intf):
             (3) INSERIR MANUAL
             (4) VOLTAR
     
-    -----------------------------------------------
+    -----------------------------------------------------
             '''.format(Interface))
 
     ei = input('Digite uma opção: ')
