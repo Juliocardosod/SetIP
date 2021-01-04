@@ -48,7 +48,7 @@ def setDHCP():
     time.sleep(1)
     os.system('cls')
     
-def setIPbb2(NW):
+def setIPbb2(NW, Mask):
     ips = NW.split('.')
     ips[3] = '253'
     gtw = ips
@@ -56,12 +56,13 @@ def setIPbb2(NW):
     ipj = '.'.join(ips)
     gtw = '.'.join(gtw)
     subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
-    subprocess.call('netsh interface ipv4 add address "{}" {} 255.255.255.0 gateway={}'.format(Interface, ipj, gtw))
+    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway={}'.format(Interface, ipj, Mask, gtw))
     subprocess.call('netsh interface ip set dns "{}" static 8.8.8.8'.format(Interface))
     time.sleep(1)
     os.system('cls')
 
 def clientes():
+    MK = '255.255.255.0'
     print('''
 
     -----------------------------------------------------
@@ -79,17 +80,18 @@ def clientes():
 
     if ec == '1':
         NW = input('Digite o IP da rede (Ex: 192.168.0.0): ')
-        setIPbb2(NW)
+        setIPbb2(NW, MK)
         os.system('cls')
 
     elif ec == '2':
         NW = '172.21.1.0'
-        setIPbb2(NW)
+        setIPbb2(NW, MK)
         os.system('cls')
 
     elif ec == '3':
         NW = '172.21.6.0'
-        setIPbb2(NW)
+        MK = '255.255.254.0'
+        setIPbb2(NW, MK)
         os.system('cls')
 
     elif ec == '4':
@@ -244,6 +246,7 @@ def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
 while True:
+    MK = '255.255.255.0'
     print('''
 
     -----------------------------------------------------
@@ -294,7 +297,7 @@ while True:
         NW = input('Insira o ip da rede: ')
         os.system('cls')
         setDHCP()
-        setIPbb2(NW)
+        setIPbb2(NW, MK)
         
     elif e == '6':
         os.system('cls')
