@@ -85,6 +85,7 @@ def clientes():
 
     elif ec == '2':
         NW = '172.21.1.0'
+        MK = '255.255.0.0'
         setIPbb2(NW, MK)
         os.system('cls')
 
