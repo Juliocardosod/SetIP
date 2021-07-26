@@ -15,8 +15,8 @@ def notas():
 cfg = ConfigParser()
 #print (cfg.read('config.ini'))
 
-versao = '1.02'
-data = 'Fev 21'
+versao = '1.03'
+data = 'Jul 21'
 
 os.system("mode con cols=63 lines=30")
 
@@ -57,35 +57,43 @@ def createCFG(): #Criar arquivo de configuração caso não exista
             cfg['SLOT_1'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_2'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_3'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_4'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_5'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_6'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_7'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SLOT_8'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
-                                'GATE': ''}
+                                'GATE': '',
+                                'INT': '1'}
             cfg['SRV_1'] = {'NOME': '',
                                 'SRV': ''}
             cfg['SRV_2'] = {'NOME': '',
@@ -117,10 +125,12 @@ def setSlot(slot):    #Editar arquivo de configuração
         v1 = input('Digite um valor para IP: ')
         v2 = input('Digite um valor para MASCARA: ')    
         v3 = input('Digite um valor para GATEWAY: ')
+        v4 = input('Qual a interface? 1 ou 2?: ')
         cfg.set("SLOT_{}".format(slot), "NAME", nome)
         cfg.set("SLOT_{}".format(slot), "IP", v1)
         cfg.set("SLOT_{}".format(slot), "MASK", v2)
         cfg.set("SLOT_{}".format(slot), "GATE", v3)
+        cfg.set("SLOT_{}".format(slot), "INT", v4)
         os.system('cls')
     except KeyboardInterrupt:
         os.system('cls')
@@ -131,8 +141,8 @@ def setIP24(IP): #Método para configurar IP rapidamente, somente IP e Máscara 
     time.sleep(1)
     os.system('cls')
 
-def setIP(IP, MK, GT): #Metodo para configuração manual de IP (Parâmetros herdados)
-    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway = {}'.format(Interface, IP, MK, GT))
+def setIP(IP, MK, GT, ITF): #Metodo para configuração manual de IP (Parâmetros herdados)
+    subprocess.call('netsh interface ipv4 add address "{}" {} {} gateway = {}'.format(ITF, IP, MK, GT))
     time.sleep(2)
     os.system('cls')
 
@@ -196,7 +206,13 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
                 VAZIO()
                 predefinido()
             else:
-                setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')))
+                INTL = cfg.get('SLOT_{}'.format(ec),'INT') #Checa qual interface será usada 
+                if INTL == 1:
+                    IntName = cfg.get('INTERFACES','PRINCIPAL')
+                else: 
+                    IntName = cfg.get('INTERFACES','SECUNDARIA')
+
+                setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')), IntName)
                 setDNS(cfg.get('DEFAULT','DNS'))
                 os.system('cls')
 
@@ -454,6 +470,10 @@ def historico():
     input('''
 
     -----------------------------------------------------
+    
+    Versão 1.03 - Jul 21
+    Adicionada posibilidade de escolha de interface na 
+    seção predefinido
 
     Versão 1.02 - Jan 21
     Configuração de slots predefinidos pelo programa 
@@ -553,7 +573,7 @@ while True: #Menu principal
                 MK = input('Digite a máscara: ')
                 GT = input('Digite o gateway: ')
                 os.system('cls')
-                setIP(IP, MK, GT)
+                setIP(IP, MK, GT, Interface)
             except KeyboardInterrupt:
                 os.system('cls')
             
