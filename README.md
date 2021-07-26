@@ -11,6 +11,8 @@ Há algumas qu podem ser selecionadas no menu como:
 4 - ADD DNS - Após configuração de um ou mais IPs, adicionar um DNS manualmente
 5 - ADD IP AUTO - Adiciona um IP segundo rede digitada e parâmetros setados em arquivo de configuração (máscara gateway, host e gateway)
 6 - Menu predefinido - Sub menu que possibilita a rápida configuração da interface de acordo com os parâmetros configurados previamente nos "slots" do arquivo de configuração
+    INT - Escolha 1 para interface principal e 2 para secundária. Ao deixar em branco, será usada a interface padrão
+    IP_UNICO - ao setar esse parametro como "sim", será realizada a limpeza de ips na interface antes de adicionar o novo
 7 - Alterar interface - Escolher qual interface será alvo da configuração solicitada pelos métodos deste programa
 8 - Habilitar / desabilitar interface
 

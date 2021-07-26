@@ -58,42 +58,50 @@ def createCFG(): #Criar arquivo de configuração caso não exista
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_2'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_3'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_4'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_5'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_6'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_7'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SLOT_8'] = {'NAME': '',
                                 'IP': '',
                                 'MASK': '',
                                 'GATE': '',
-                                'INT': '1'}
+                                'INT': '',
+                                'IP_UNICO' :'sim'}
             cfg['SRV_1'] = {'NOME': '',
                                 'SRV': ''}
             cfg['SRV_2'] = {'NOME': '',
@@ -126,11 +134,13 @@ def setSlot(slot):    #Editar arquivo de configuração
         v2 = input('Digite um valor para MASCARA: ')    
         v3 = input('Digite um valor para GATEWAY: ')
         v4 = input('Qual a interface? 1 ou 2?: ')
+        v5 = input('Limpar IPs anteriores? "sim" ou "não": ')
         cfg.set("SLOT_{}".format(slot), "NAME", nome)
         cfg.set("SLOT_{}".format(slot), "IP", v1)
         cfg.set("SLOT_{}".format(slot), "MASK", v2)
         cfg.set("SLOT_{}".format(slot), "GATE", v3)
         cfg.set("SLOT_{}".format(slot), "INT", v4)
+        cfg.set("SLOT_{}".format(slot), "IP_UNICO", v5)
         os.system('cls')
     except KeyboardInterrupt:
         os.system('cls')
@@ -146,9 +156,9 @@ def setIP(IP, MK, GT, ITF): #Metodo para configuração manual de IP (Parâmetro
     time.sleep(2)
     os.system('cls')
 
-def setDHCP(): #Metodo para setar a interface como DHCP
-    subprocess.call('netsh interface ip set address "{}" dhcp'.format(Interface))
-    subprocess.call('netsh interface ip set dns "{}" dhcp'.format(Interface))
+def setDHCP(INTL): #Metodo para setar a interface como DHCP
+    subprocess.call('netsh interface ip set address "{}" dhcp'.format(INTL))
+    subprocess.call('netsh interface ip set dns "{}" dhcp'.format(INTL))
     time.sleep(1)
     os.system('cls')
     
@@ -209,8 +219,13 @@ def predefinido(): #Menu predefinido integrado ao arquivo config.ini
                 INTL = cfg.get('SLOT_{}'.format(ec),'INT') #Checa qual interface será usada 
                 if INTL == 1:
                     IntName = cfg.get('INTERFACES','PRINCIPAL')
-                else: 
+                elif INTL == 2: 
                     IntName = cfg.get('INTERFACES','SECUNDARIA')
+                else:
+                    IntName = Interface
+
+                if (cfg.get('SLOT_{}'.format(ec),'IP_UNICO')) == 'sim': #Realiza limpeza de IPs?
+                    setDHCP(IntName)
 
                 setIP((cfg.get('SLOT_{}'.format(ec),'IP')),(cfg.get('SLOT_{}'.format(ec),'MASK')),(cfg.get('SLOT_{}'.format(ec),'GATE')), IntName)
                 setDNS(cfg.get('DEFAULT','DNS'))
@@ -555,7 +570,7 @@ while True: #Menu principal
         
         if e == '1':
             os.system('cls')
-            setDHCP()
+            setDHCP(Interface)
             
         elif e == '2':
             try:
@@ -591,7 +606,7 @@ while True: #Menu principal
                 print()
                 NW = input('Insira o ip da rede: ')
                 os.system('cls')
-                setDHCP()
+                setDHCP(Interface)
                 setIPAuto(NW)
             except KeyboardInterrupt:
                 os.system('cls')
@@ -619,7 +634,7 @@ while True: #Menu principal
             os.system('cls')
             CMD()    
 
-        elif e == 'historico' or e == 'Historico': #Opção oculta - CMD
+        elif e == 'historico' or e == 'Historico' or e == '11': #Opção oculta - CMD
             os.system('cls')
             historico() 
 
