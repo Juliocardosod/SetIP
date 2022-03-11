@@ -13,10 +13,8 @@ def notas():
     ''')
 
 cfg = ConfigParser()
-#print (cfg.read('config.ini'))
-
-versao = '1.03'
-data = 'Jul 21'
+versao = '1.04'
+data = 'Fev 22'
 
 os.system("mode con cols=63 lines=30")
 
@@ -124,8 +122,6 @@ def createCFG(): #Criar arquivo de configuração caso não exista
     except Exception as e: 
         input(e)
         os.system('cls')
-
-createCFG()
 
 def setSlot(slot):    #Editar arquivo de configuração
     try:
@@ -485,7 +481,9 @@ def historico():
     input('''
 
     -----------------------------------------------------
-    
+    Versão 1.04 - Fev 22
+    Tratamento de falhas aprimorada
+
     Versão 1.03 - Jul 21
     Adicionada posibilidade de escolha de interface na 
     seção predefinido
@@ -536,8 +534,12 @@ def sobre(): #Sobre o programa
 def nadaAqui():
     os.system('cls')#Sério, não tem nada mesmo
 
-cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
-Interface = cfg.get('INTERFACES','PRINCIPAL')
+try:
+    createCFG()
+    cfg.read_file(open(os.path.join(os.path.dirname(__file__),"config.ini")))
+    Interface = cfg.get('INTERFACES','PRINCIPAL')
+except Exception as ex:
+        input(f"Algo de errado aconteceu! :/ {ex}")
 
 while True: #Menu principal
     os.system("color 0f")
@@ -653,4 +655,6 @@ while True: #Menu principal
             #nadaAqui()
     except KeyboardInterrupt:
         os.system('cls')
+    except Exception as ex:
+        input(f"Algo de errado aconteceu! :/ {ex}")
     
